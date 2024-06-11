@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+import salat
+import datetime as dt
+from datetime import datetime
+import pytz
+import tabulate
+
+watch = datetime.today()
+years = watch.strftime("%Y")
+months = watch.strftime("%m")
+days = watch.strftime("%d")
+
+work0 = int(years)
+work1 = int(months)
+work2 = int(days)
+
+# Set up calculation methods
+pt = salat.PrayerTimes(salat.CalculationMethod.ISNA, salat.AsrMethod.STANDARD)
+
+# Specify the date (e.g., January 1, 2000)
+date = dt.date(work0, work1, work2)
+
+# Specify the longitude and latitude of your location (e.g., New York City)
+longitude = -78.6051  # degrees East
+latitude = 35.8147  # degrees North
+
+# Set the timezone (e.g., Eastern Time)
+eastern = pytz.timezone('US/Eastern')
+
+# Calculate prayer times
+prayer_times = pt.calc_times(date, eastern, longitude, latitude)
+
+# Print the prayer times in a table
+table = []
+for name, time in prayer_times.items():
+    readable_time = time.strftime("%m/%d/%Y, %I:%M:%S %p %Z")
+    table.append([name, readable_time])
+
+print(tabulate.tabulate(table, headers='firstrow'))

@@ -1,2 +1,2 @@
 # noJive
-on deck... hold on
+pray... update for your locale
